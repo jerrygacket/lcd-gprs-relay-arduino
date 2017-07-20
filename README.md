@@ -6,8 +6,13 @@ lcd keypad gprs sim900 relay arduino
 Компоненты:
 
  -- Arduino uno R3
+ 
  -- GSM/GPRS модем SIM900 Shield
+ 
  -- LCD1602 Keypad Shield
+ 
  -- 2 штуки Arduino Relay module
+ 
  -- 2 оптопары (PC2501)
+ 
  -- пъезо пищалка
