@@ -161,7 +161,8 @@ void powerongprs() //включение модуля SIM900
   digitalWrite(POWERGPRS,HIGH);
   delay(2000);
   digitalWrite(POWERGPRS,LOW);
-  delay(10000);
+  delay(10000); //эту задержку можно уменьшить, если сигнал хороший, но меньше 5000 не желательно. 
+		//сим-карта может не успеть зарегисрироваться в сети
   GPRSSerial.println("AT");       // обязательная запись в модуль SIM900 для установки скорости порта
 }
 
@@ -247,7 +248,7 @@ void readControls()  //чтение контрольных пинов и выв�
 
 void shorthttp(String msg)  //короткая схема отправки запроса. считаем, что GPRS инициализирован
 {
- GPRSSerial.println("AT+HTTPPARA=\"URL\",\""+siteaddress+"/"+actionscript+msg+"\"");// setting the httppara, the second parameter is the website you want to access
+ GPRSSerial.println("AT+HTTPPARA=\"URL\",\""+siteaddress+"/"+actionscript+msg+"\"");
  delay(100);
  ShowSerialData();
  GPRSSerial.println("AT+HTTPACTION=0");//submit the request 
@@ -267,29 +268,29 @@ void SubmitHttpRequest(String msg)
  GPRSSerial.println("AT+CGATT?");
  delay(100);
  ShowSerialData();
- GPRSSerial.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"");//setting the SAPBR, the connection type is using gprs
+ GPRSSerial.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"");
  delay(100);
  ShowSerialData();
  GPRSSerial.println("AT+SAPBR=3,1,\"APN\",\"internet\"");//установка точки доступа APN. вторым параметром идет адрес сервера APN. для мегафона это internet
  delay(1000);
  ShowSerialData();
  //раскоментировать следующие 2 строки, если часто приходит ошибка 601, 602, 603 или 604
- //GPRSSerial.println("AT+SAPBR=0,1");//setting the SAPBR, for detail you can refer to the AT command mamual
+ //GPRSSerial.println("AT+SAPBR=0,1");
  //delay(2000);
  ShowSerialData();
- GPRSSerial.println("AT+SAPBR=1,1");//setting the SAPBR, for detail you can refer to the AT command mamual
+ GPRSSerial.println("AT+SAPBR=1,1");
  delay(2000);
  ShowSerialData();
- GPRSSerial.println("AT+HTTPINIT"); //init the HTTP request
+ GPRSSerial.println("AT+HTTPINIT"); // для HTTPS запроса "AT+HTTPSINIT"
  delay(1000); 
  ShowSerialData();
-  GPRSSerial.println("AT+HTTPPARA=\"URL\",\""+siteaddress+"/"+actionscript+msg+"\"");// setting the httppara, the second parameter is the website you want to access
+  GPRSSerial.println("AT+HTTPPARA=\"URL\",\""+siteaddress+"/"+actionscript+msg+"\"");
  delay(1000);
  ShowSerialData();
- GPRSSerial.println("AT+HTTPACTION=0");//submit the request 
- delay(3000);//the delay is very important, the delay time is base on the return from the website, if the return datas are very large, the time required longer.
+ GPRSSerial.println("AT+HTTPACTION=0");
+ delay(3000);
  ShowSerialData();
- GPRSSerial.println("AT+HTTPREAD");// read the data from the website you access
+ GPRSSerial.println("AT+HTTPREAD");
  delay(300);
  ShowSerialData();
  GPRSSerial.println("");
